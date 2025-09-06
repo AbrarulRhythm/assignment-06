@@ -1,18 +1,26 @@
-// Load Category API fetch
+// load all category
 const loadCategory = () => {
     fetch('https://openapi.programming-hero.com/api/categories')
         .then((res) => res.json())
         .then((json) => displayCategory(json.categories));
 }
 
-// Load tree card API fetch
+// load all plants
 const loadAllPlants = () => {
     fetch('https://openapi.programming-hero.com/api/plants')
         .then((res) => res.json())
         .then((json) => displayAllPlants(json.plants));
 }
 
-// get the plant from the loadAllPlants() function and display in UI
+// load plants by categories
+const loadCategoryPlant = (id) => {
+    const url = `https://openapi.programming-hero.com/api/category/${id}`;
+    fetch(url)
+        .then((res) => res.json())
+        .then((json) => displayAllPlants(json.plants));
+}
+
+// display plants card
 const displayAllPlants = (plants) => {
     const plantCardContainer = document.getElementById('plant-card-container');
     plantCardContainer.innerHTML = "";
@@ -37,7 +45,7 @@ const displayAllPlants = (plants) => {
     }
 }
 
-// get the category from the loadCategory() function and display in UI
+// display all category
 const displayCategory = (categories) => {
     const categoryContainer = document.getElementById('category-container');
     categoryContainer.innerHTML = "";
@@ -45,7 +53,7 @@ const displayCategory = (categories) => {
     for (let category of categories) {
         const li = document.createElement('li');
         li.innerHTML = `
-            <button class="block w-full text-left py-2 px-[10px] rounded-[4px] dark-color hover:bg-[#b5ebc8] cursor-pointer duration-300">${category.category_name}</button>
+            <button id="category-btn-${category.id}" onclick="loadCategoryPlant(${category.id})" class="block w-full text-left py-2 px-[10px] rounded-[4px] dark-color hover:bg-[#b5ebc8] cursor-pointer duration-300">${category.category_name}</button>
         `;
 
         categoryContainer.appendChild(li);
