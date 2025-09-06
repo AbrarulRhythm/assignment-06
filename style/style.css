@@ -35,3 +35,8 @@ body {
     background: transparent;
     color: #FACC15;
 }
+
+.active {
+    background-color: #15803D;
+    color: #FFF;
+}

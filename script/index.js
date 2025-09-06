@@ -12,12 +12,25 @@ const loadAllPlants = () => {
         .then((json) => displayAllPlants(json.plants));
 }
 
+// remove all active class
+const removeActive = () => {
+    const categoryButtons = document.querySelectorAll('.category-btn');
+    categoryButtons.forEach((categoryButton) => {
+        categoryButton.classList.remove('active');
+    })
+}
+
 // load plants by categories
 const loadCategoryPlant = (id) => {
     const url = `https://openapi.programming-hero.com/api/category/${id}`;
     fetch(url)
         .then((res) => res.json())
-        .then((json) => displayAllPlants(json.plants));
+        .then((json) => {
+            removeActive(); // remove all active class
+            const clickBtn = document.getElementById(`category-btn-${id}`);
+            clickBtn.classList.add('active'); // add active class
+            displayAllPlants(json.plants)
+        });
 }
 
 // display plants card
@@ -53,7 +66,7 @@ const displayCategory = (categories) => {
     for (let category of categories) {
         const li = document.createElement('li');
         li.innerHTML = `
-            <button id="category-btn-${category.id}" onclick="loadCategoryPlant(${category.id})" class="block w-full text-left py-2 px-[10px] rounded-[4px] dark-color hover:bg-[#b5ebc8] cursor-pointer duration-300">${category.category_name}</button>
+            <button id="category-btn-${category.id}" onclick="loadCategoryPlant(${category.id})" class="category-btn block w-full text-left py-2 px-[10px] rounded-[4px] dark-color hover:bg-[#b5ebc8] cursor-pointer duration-300">${category.category_name}</button>
         `;
 
         categoryContainer.appendChild(li);
