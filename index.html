@@ -24,11 +24,11 @@
     <link rel="stylesheet" href="style/style.css">
 </head>
 
-<body>
+<body class="overflow-x-hidden">
 
     <!-- Header -->
     <header id="header" class="header">
-        <div class="px-4 md:px-6 lg:px-12 2xl:px-[60px] py-6 fixed left-0 right-0 top-0 primary-bg">
+        <div class="px-4 md:px-6 lg:px-12 2xl:px-[60px] py-4 md:py-6 fixed left-0 right-0 top-0 z-10 primary-bg">
             <div class="navbar text-white p-0 min-h-0">
                 <div class="navbar-start">
                     <div class="dropdown">
@@ -77,6 +77,28 @@
         </div>
     </header>
     <!-- Header End -->
+
+    <!-- Hero Section -->
+    <section id="banner"
+        class="banner bg-[#CFF0DC] px-4 md:px-6 lg:px-12 2xl:px-[60px] pt-[72px] md:pt-[88px] relative overflow-hidden">
+        <div class="py-14 lg:py-[100px] text-center">
+            <div class="z-[4] relative">
+                <h1 class="dark-color text-4xl lg:text-5xl font-bold mb-2 leading-[1.4]">Plant a Tree, Grow a Future
+                </h1>
+                <p class="w-auto lg:w-[583px] mb-6 mx-auto opacity-80">Join our mission to plant 1 million trees and
+                    make the Earth greener for future
+                    generations.</p>
+                <a class="btn btn-warning primary-color border-none rounded-full font-medium px-5 text-base">Get
+                    Involved</a>
+            </div>
+
+            <img src="assets/hero-leaf1.png"
+                class="hidden lg:block absolute bottom-0 left-0 lg:-left-[234px] 2xl:left-0" alt="">
+            <img src="assets/hero-leaf2.png"
+                class="hidden lg:block absolute bottom-0 right-0 lg:-right-[234px] 2xl:right-0" alt="">
+        </div>
+    </section>
+    <!-- Hero Section End -->
 
 </body>
 
