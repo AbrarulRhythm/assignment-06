@@ -1,10 +1,43 @@
-// Load Category
+// Load Category API fetch
 const loadCategory = () => {
     fetch('https://openapi.programming-hero.com/api/categories')
         .then((res) => res.json())
         .then((json) => displayCategory(json.categories));
 }
 
+// Load tree card API fetch
+const loadAllPlants = () => {
+    fetch('https://openapi.programming-hero.com/api/plants')
+        .then((res) => res.json())
+        .then((json) => displayAllPlants(json.plants));
+}
+
+// get the plant from the loadAllPlants() function and display in UI
+const displayAllPlants = (plants) => {
+    const plantCardContainer = document.getElementById('plant-card-container');
+    plantCardContainer.innerHTML = "";
+
+    for (let plant of plants) {
+        const plantDiv = document.createElement('div');
+        plantDiv.classList.add('w-full', 'lg:w-4/12', 'px-3', '2xl:px-[15px]', 'mb-6', '2xl:mb-[30px]');
+        plantDiv.innerHTML = `
+            <div class="p-4 rounded-lg bg-white">
+                <img src="${plant.image}" class="w-full h-[200px] 2xl:h-[250px] object-cover mb-3 rounded-lg" alt="">
+                <h5 class="text-sm font-semibold mb-2 dark-color">${plant.name}</h5>
+                <p class="text-[12px] dark-color opacity-80 mb-2">${plant.description}</p>
+                <div class="flex justify-between items-center mb-3">
+                    <div class="inline-block py-1 px-3 text-sm bg-[#DCFCE7] primary-color rounded-full font-medium">${plant.category}</div>
+                    <span class="text-sm font-semibold">৳${plant.price}</span>
+                </div>
+                <button class="add-to-card w-full text-base lg:text-sm 2xl:text-base font-medium py-3 text-white bg-[#15803D] rounded-full cursor-pointer hover:bg-[#0a682c] duration-300">Add to Cart</button>
+            </div>
+        `;
+
+        plantCardContainer.appendChild(plantDiv);
+    }
+}
+
+// get the category from the loadCategory() function and display in UI
 const displayCategory = (categories) => {
     const categoryContainer = document.getElementById('category-container');
     categoryContainer.innerHTML = "";
@@ -12,11 +45,12 @@ const displayCategory = (categories) => {
     for (let category of categories) {
         const li = document.createElement('li');
         li.innerHTML = `
-            <a href="#" class="block py-2 px-[10px] rounded-[4px] dark-color hover:bg-[#DCFCE7] duration-300">${category.category_name}</a>
+            <button class="block w-full text-left py-2 px-[10px] rounded-[4px] dark-color hover:bg-[#b5ebc8] cursor-pointer duration-300">${category.category_name}</button>
         `;
 
         categoryContainer.appendChild(li);
     }
 }
 
+loadAllPlants();
 loadCategory();
