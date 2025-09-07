@@ -72,7 +72,7 @@ const displayPlantDetails = (plant) => {
         <img src="${plant.image}" class="h-[300px] object-cover rounded-lg w-full mb-4" alt="">
         <div class="space-y-3">
             <div class="text-gray-500"><strong class="text-gray-800">Category:</strong> ${plant.category}</div>
-            <div class="text-gray-500"><strong class="text-gray-800">Price:</strong> ${plant.price}</div>
+            <div class="text-gray-500"><strong class="text-gray-800">Price:</strong> ৳${plant.price}</div>
             <div class="text-gray-500"><strong class="text-gray-800">Description:</strong> ${plant.description}</div>
         </div>
     `;
