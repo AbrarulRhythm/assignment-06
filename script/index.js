@@ -1,3 +1,5 @@
+let cartDataContainer = [];
+
 // Loading Spinner
 const manageSpinner = (state) => {
     const loadingSpinner = document.getElementById('spinner');
@@ -63,15 +65,15 @@ const displayAllPlants = (plants) => {
         const plantDiv = document.createElement('div');
         plantDiv.classList.add('w-full', 'lg:w-4/12', 'px-3', '2xl:px-[15px]', 'mb-6', '2xl:mb-[30px]');
         plantDiv.innerHTML = `
-            <div class="p-4 rounded-lg bg-white">
+            <div class="plant-card p-4 rounded-lg bg-white">
                 <img src="${plant.image}" class="w-full h-[200px] 2xl:h-[250px] object-cover mb-3 rounded-lg" alt="">
-                <h5 class="text-sm font-semibold mb-2 dark-color">${plant.name}</h5>
+                <h5 class="plant-name text-sm font-semibold mb-2 dark-color">${plant.name}</h5>
                 <p class="text-[12px] dark-color opacity-80 mb-2">${plant.description}</p>
                 <div class="flex justify-between items-center mb-3">
                     <div class="inline-block py-1 px-3 text-sm bg-[#DCFCE7] primary-color rounded-full font-medium">${plant.category}</div>
-                    <span class="text-sm font-semibold">৳${plant.price}</span>
+                    <div class="text-sm font-semibold">৳<span class="palntPrice">${plant.price}</span></div>
                 </div>
-                <button class="add-to-card w-full text-base lg:text-sm 2xl:text-base font-medium py-3 text-white bg-[#15803D] rounded-full cursor-pointer hover:bg-[#0a682c] duration-300">Add to Cart</button>
+                <button class="add-to-cart w-full text-base lg:text-sm 2xl:text-base font-medium py-3 text-white bg-[#15803D] rounded-full cursor-pointer hover:bg-[#0a682c] duration-300">Add to Cart</button>
             </div>
         `;
 
@@ -79,6 +81,63 @@ const displayAllPlants = (plants) => {
     }
 
     manageSpinner(false);
+
+    // add to cart functionality
+    const allCartButtons = document.getElementsByClassName('add-to-cart');
+
+    for (let cartButton of allCartButtons) {
+        cartButton.addEventListener('click', () => {
+            const plantCard = cartButton.closest('.plant-card');
+
+            const plantName = plantCard.querySelector('.plant-name').innerText;
+            const plantPrice = parseInt(plantCard.querySelector('.palntPrice').innerText);
+
+            // Cart total amount
+            const totalAmount = parseInt(document.getElementById('total-amount').innerText)
+
+            alert(`${plantName} has been added to the cart.`);
+
+            const totalNewAmount = plantPrice + totalAmount;
+
+            document.getElementById('total-amount').innerText = totalNewAmount;
+
+            const cartData = {
+                plantName: plantName,
+                plantPrice: plantPrice
+            }
+
+            cartDataContainer.push(cartData);
+            showCartData();
+        })
+    }
+}
+
+// Function to show cart data in ui
+const showCartData = () => {
+    const cartItemContainer = document.getElementById('cart-items-container');
+    cartItemContainer.innerHTML = "";
+
+    for (let data of cartDataContainer) {
+        const div = document.createElement('div');
+        div.classList.add('bg-[#F0FDF4]', 'rounded-lg', 'mb-2', 'py-2', 'px-3');
+        div.innerHTML = `
+            <div class="flex justify-between items-center">
+                <div>
+                    <h5 class="text-sm font-semibold mb-1">${data.plantName}</h5>
+                    <h6 class="price text-base dark-color opacity-50">৳<span class="cart-plant-price">${data.plantPrice}</span> x 1</h6>
+                </div>
+
+                <div class="remove-from-cart cursor-pointer text-gray-400 hover:text-gray-700 duration-300">
+                    <i class="fa-solid fa-xmark"></i>
+                </div>
+            </div>
+        `;
+
+        cartItemContainer.appendChild(div);
+    }
+
+    // show cart total amount wrapper
+    document.getElementById('total-amount-wrapper').classList.remove('hidden');
 }
 
 // display all category
