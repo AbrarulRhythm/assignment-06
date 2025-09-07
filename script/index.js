@@ -56,6 +56,30 @@ const loadCategoryPlant = (id) => {
         });
 }
 
+// load plant details
+const loadPlantDetail = (id) => {
+    const url = `https://openapi.programming-hero.com/api/plant/${id}`;
+    fetch(url)
+        .then((res) => res.json())
+        .then((data) => displayPlantDetails(data.plants));
+}
+
+// display plant details
+const displayPlantDetails = (plant) => {
+    const plantDetailsContainer = document.getElementById('plant-details-container');
+    plantDetailsContainer.innerHTML = `
+        <h3 class="text-2xl font-semibold mb-4 text-dark">${plant.name}</h3>
+        <img src="${plant.image}" class="h-[300px] object-cover rounded-lg w-full mb-4" alt="">
+        <div class="space-y-3">
+            <div class="text-gray-500"><strong class="text-gray-800">Category:</strong> ${plant.category}</div>
+            <div class="text-gray-500"><strong class="text-gray-800">Price:</strong> ${plant.price}</div>
+            <div class="text-gray-500"><strong class="text-gray-800">Description:</strong> ${plant.description}</div>
+        </div>
+    `;
+
+    document.getElementById('plant_modal').showModal();
+}
+
 // display plants card
 const displayAllPlants = (plants) => {
     const plantCardContainer = document.getElementById('plant-card-container');
@@ -67,7 +91,7 @@ const displayAllPlants = (plants) => {
         plantDiv.innerHTML = `
             <div class="plant-card p-4 rounded-lg bg-white">
                 <img src="${plant.image}" class="w-full h-[200px] 2xl:h-[250px] object-cover mb-3 rounded-lg" alt="">
-                <h5 class="plant-name text-sm font-semibold mb-2 dark-color">${plant.name}</h5>
+                <h5 onclick="loadPlantDetail(${plant.id})" class="plant-name text-sm font-semibold mb-2 dark-color cursor-pointer">${plant.name}</h5>
                 <p class="text-[12px] dark-color opacity-80 mb-2">${plant.description}</p>
                 <div class="flex justify-between items-center mb-3">
                     <div class="inline-block py-1 px-3 text-sm bg-[#DCFCE7] primary-color rounded-full font-medium">${plant.category}</div>
