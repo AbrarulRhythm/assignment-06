@@ -87,7 +87,7 @@ const displayAllPlants = (plants) => {
 
     for (let plant of plants) {
         const plantDiv = document.createElement('div');
-        plantDiv.classList.add('w-full', 'lg:w-4/12', 'px-3', '2xl:px-[15px]', 'mb-6', '2xl:mb-[30px]');
+        plantDiv.classList.add('w-full', 'md:w-6/12', 'lg:w-4/12', 'px-3', '2xl:px-[15px]', 'mb-6', '2xl:mb-[30px]');
         plantDiv.innerHTML = `
             <div class="plant-card p-4 rounded-lg bg-white">
                 <img src="${plant.image}" class="w-full h-[200px] 2xl:h-[250px] object-cover mb-3 rounded-lg" alt="">
