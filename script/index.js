@@ -93,7 +93,7 @@ const displayAllPlants = (plants) => {
             const plantPrice = parseInt(plantCard.querySelector('.palntPrice').innerText);
 
             // Cart total amount
-            const totalAmount = parseInt(document.getElementById('total-amount').innerText)
+            const totalAmount = parseInt(document.getElementById('total-amount').innerText);
 
             alert(`${plantName} has been added to the cart.`);
 
@@ -108,18 +108,20 @@ const displayAllPlants = (plants) => {
 
             cartDataContainer.push(cartData);
             showCartData();
-        })
+        });
     }
 }
 
 // Function to show cart data in ui
 const showCartData = () => {
+    const totalAmountWrapper = document.getElementById('total-amount-wrapper');
     const cartItemContainer = document.getElementById('cart-items-container');
     cartItemContainer.innerHTML = "";
 
+    let index = 0; // index for remove cart item
     for (let data of cartDataContainer) {
         const div = document.createElement('div');
-        div.classList.add('bg-[#F0FDF4]', 'rounded-lg', 'mb-2', 'py-2', 'px-3');
+        div.classList.add('single-cart', 'bg-[#F0FDF4]', 'rounded-lg', 'mb-2', 'py-2', 'px-3');
         div.innerHTML = `
             <div class="flex justify-between items-center">
                 <div>
@@ -127,17 +129,44 @@ const showCartData = () => {
                     <h6 class="price text-base dark-color opacity-50">৳<span class="cart-plant-price">${data.plantPrice}</span> x 1</h6>
                 </div>
 
-                <div class="remove-from-cart cursor-pointer text-gray-400 hover:text-gray-700 duration-300">
+                <div class="remove-from-cart cursor-pointer text-gray-400 hover:text-gray-700 duration-300" data-index="${index}">
                     <i class="fa-solid fa-xmark"></i>
                 </div>
             </div>
         `;
 
         cartItemContainer.appendChild(div);
+        index++; // update index
+    }
+
+    // remove cart item functionality
+    const removeFromCartButtons = document.getElementsByClassName('remove-from-cart');
+
+    for (let removeButton of removeFromCartButtons) {
+        removeButton.addEventListener('click', () => {
+            const index = removeButton.getAttribute('data-index'); //get index
+            const cart = removeButton.closest('.single-cart');
+            const cartPrice = parseInt(cart.querySelector('.cart-plant-price').innerText);
+
+            // Cart total amount
+            const totalAmount = parseInt(document.getElementById('total-amount').innerText);
+
+            const totalNewAmount = totalAmount - cartPrice;
+
+            document.getElementById('total-amount').innerText = totalNewAmount;
+
+            cartDataContainer.splice(index, 1);
+
+            showCartData();
+        });
     }
 
     // show cart total amount wrapper
-    document.getElementById('total-amount-wrapper').classList.remove('hidden');
+    if (cartDataContainer.length === 0) {
+        totalAmountWrapper.classList.add('hidden');
+    } else {
+        totalAmountWrapper.classList.remove('hidden');
+    }
 }
 
 // display all category
