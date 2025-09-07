@@ -29,6 +29,7 @@ const loadCategoryPlant = (id) => {
             removeActive(); // remove all active class
             const clickBtn = document.getElementById(`category-btn-${id}`);
             clickBtn.classList.add('active'); // add active class
+
             displayAllPlants(json.plants)
         });
 }
